@@ -27,6 +27,17 @@ class CampController extends Controller
         return new CampResource($camp);
     }
 
+    function generateRandomString($length = 20) 
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+    return $randomString;
+}
+
     public function create(Request $request)
     {
         $validated = $request->validate([
@@ -35,20 +46,19 @@ class CampController extends Controller
             'slug' => 'required|max:500',
         ]);
 
-        // if($request->file){
-        //     $validated = $request->validate([
-        //         'file' => 'mimes:png,jpg,jpeg|max:100000'
-        //     ]);
+        if($request->file){
+            $validated = $request->validate([
+                'file' => 'mimes:png,jpg,jpeg|max:100000'
+            ]);
 
-        //     $fileName = $this->generateRandomString();
-        //     $extension = $request->file->extension();
+            $fileName = $this->generateRandomString();
+            $extension = $request->file->extension();
 
-        //     Storage::putFileAs('images', $request->file, $fileName. '.'. $extension);
+            Storage::putFileAs('images', $request->file, $fileName. '.'. $extension);
 
-        //     $request['image'] = $fileName . '.'. $extension;
-        //     $request['author'] = Auth::user()->id;
-        //     $camp = Camp::create($request->all());
-        // }
+            $request['image'] = $fileName . '.'. $extension;
+            $camp = Camp::create($request->all());
+        }
 
         
         $camp = Camp::create($request->all());

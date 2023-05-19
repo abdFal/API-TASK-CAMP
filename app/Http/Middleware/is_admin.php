@@ -20,27 +20,13 @@ class is_admin
     {
         $user = Auth::user();
 
-        if ($user->is_admin) {
+        if ($user->is_admin == false) {
             return response()->json([
-                'message' => 'Kamu adalah admin!'
+                'message' => 'Kamu bukan admin!'
             ]);
         }
 
-        $user_id = $user->id;
-        $camp_id = $request->route('id');
-        $camp = Camp::findOrFail($camp_id);
-
-       
-        $isEnrolled = Enroll::where('user_id', $user_id)
-            ->where('camp_id', $camp_id)
-            ->exists();
-
-        if ($isEnrolled) {
-            return response()->json([
-                'message' => 'Kamu sudah terdaftar di camp ini!'
-            ]);
-        }
-
+        
         return $next($request);
     }
 }

@@ -14,7 +14,7 @@ class EnrollController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
-        $this->middleware('is_admin');
+        $this->middleware('enroll');
     }
     public function enroll(Request $request, $id)
     {
@@ -26,7 +26,6 @@ class EnrollController extends Controller
             'user_id' => $user_id,
             'camp_id' => $camp->id,
         ]);
-
 
         return response()->json([
             'message' => 'enroll berhasil!'
