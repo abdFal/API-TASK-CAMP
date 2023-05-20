@@ -11,7 +11,7 @@ class Camp extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title','slug', 'price', 'image'];
+    protected $fillable = ['title', 'price', 'image'];
 
     /**
      * Get all of the comments for the Camp
@@ -32,5 +32,22 @@ class Camp extends Model
     {
         return $this->hasMany(Enroll::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($camp) {
+            $title = str_replace('?', '', $camp->title);
+            $slug = preg_replace('/\s+/', '-', $title);
+            $camp->slug = $slug;
+        });
+        static::updating(function ($camp) {
+            $title = str_replace('?', '', $camp->title);
+            $slug = preg_replace('/\s+/', '-', $title);
+            $camp->slug = $slug;
+        });
+    }
+
     
 }

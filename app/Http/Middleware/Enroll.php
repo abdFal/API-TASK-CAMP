@@ -28,9 +28,16 @@ class Enroll
             ->where('camp_id', $camp_id)
             ->exists();
 
+        
         if ($isEnrolled) {
             return response()->json([
                 'message' => 'Kamu sudah terdaftar di camp ini!'
+            ]);
+        }
+
+        else if ($user->is_admin == true) {
+            return response()->json([
+                'message' => 'Kamu adalah admin!'
             ]);
         }
 

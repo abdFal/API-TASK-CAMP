@@ -15,8 +15,9 @@ class CampBenefitResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
-            'created_at' => date_format($this->created_at, 'Y-m-d H:i'),
+            // 'created_at' => date_format($this->created_at, 'Y-m-d H:i'),
         ];
     }
 }

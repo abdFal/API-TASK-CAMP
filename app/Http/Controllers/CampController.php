@@ -43,7 +43,7 @@ class CampController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'price' => 'required|numeric',
-            'slug' => 'required|max:500',
+            // 'slug' => 'required|max:500',
         ]);
 
         if($request->file){
@@ -57,7 +57,7 @@ class CampController extends Controller
             Storage::putFileAs('images', $request->file, $fileName. '.'. $extension);
 
             $request['image'] = $fileName . '.'. $extension;
-            $camp = Camp::create($request->all());
+            
         }
 
         
@@ -70,7 +70,7 @@ class CampController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'price' => 'required|numeric',
-            'slug' => 'required|max:500',
+            // 'slug' => 'required|max:500',
         ]);
 
         $camp = Camp::findOrFail($id);
