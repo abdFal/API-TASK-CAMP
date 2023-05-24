@@ -19,6 +19,8 @@ return new class extends Migration
 
             $table->foreign('camp_id')->references('id')->on('camps');
             $table->foreign('user_id')->references('id')->on('users');
+
+            
         });
     }
 

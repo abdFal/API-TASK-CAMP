@@ -44,5 +44,15 @@ class CampBenefitController extends Controller
         ]);
     }
 
+    public function delete($id)
+    {
+        $camp = CampBenefit::findOrFail($id);
+        $camp->delete();
+
+        return response()->json([
+            'message' => 'benefit telah dihapus'
+        ]);
+    }
+
     
 }

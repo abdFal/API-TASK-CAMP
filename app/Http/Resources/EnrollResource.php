@@ -16,6 +16,7 @@ class EnrollResource extends JsonResource
     {
         return [
             'user_id' => $this->user_id,
+            'participant_name' => $this->participant['name'], 
         ];
     }
 }

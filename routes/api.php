@@ -30,3 +30,4 @@ Route::delete('/camps/{id}', [CampController::class, 'destroy']);
 
 Route::post('/camps/benefits', [CampBenefitController::class, 'store']);
 Route::patch('/camps/benefits/{id}', [CampBenefitController::class, 'edit']);
+Route::delete('/camps/benefits/{id}', [CampBenefitController::class, 'delete']);

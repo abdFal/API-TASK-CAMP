@@ -13,4 +13,13 @@ class Enroll extends Model
         'user_id', 'camp_id',
     ];
 
+    /**
+     * Get the participant that owns the Enroll
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function participant(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
