@@ -33,12 +33,14 @@ class EnrollController extends Controller
         ]);
     }
 
-    public function complete($id)
+    public function complete(Request $request, $camp_id)
     {
         $user_id = Auth::user()->id;
 
         $data = Enroll::where('user_id', $user_id);
-        $data->update([
+        $datas = $data->where('camp_id', $camp_id);
+
+        $datas->update([
             'is_completed' => true,
         ]);
 
