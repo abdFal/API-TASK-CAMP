@@ -24,6 +24,7 @@ Route::get('/camps/me', [AuthController::class, 'me']);
 Route::get('/camps', [CampController::class, 'index']);
 Route::get('/camps/{id}', [CampController::class, 'show']);
 Route::post('/camps/{id}/enroll', [EnrollController::class, 'enroll']);
+Route::patch('/camps/{id}/complete', [EnrollController::class, 'complete']);
 Route::post('/camps', [CampController::class, 'create']);
 Route::patch('/camps/{id}', [CampController::class, 'edit']);
 Route::delete('/camps/{id}', [CampController::class, 'destroy']);

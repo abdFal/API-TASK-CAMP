@@ -10,7 +10,7 @@ class Enroll extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'camp_id',
+        'user_id', 'camp_id','is_completed'
     ];
 
     /**

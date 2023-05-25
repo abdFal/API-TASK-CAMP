@@ -21,7 +21,7 @@ class CampResource extends JsonResource
             'price' => $this->price,
             'image' => $this->image,
             'camp_benefits' => CampBenefitResource::collection($this->camp_benefits),
-            'enrolls' => EnrollResource::collection($this->enrolls),
+            'enrolls' => EnrollResource::collection($this->enrolls)->where('is_completed', false),
         ];
     }
 }

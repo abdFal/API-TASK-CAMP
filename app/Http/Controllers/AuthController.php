@@ -52,17 +52,24 @@ class AuthController extends Controller
 
         $userData = [
             'name' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
+            'occupation' => $user->occupation
         ];
 
         $enrolledCamps = Enroll::where('user_id', $user->id)->get();
-        $enrolledCampIds = $enrolledCamps->pluck('camp_id')->toArray();
+        $uncompleted_camps = $enrolledCamps->where('is_completed', false);
+        $completed_camps = $enrolledCamps->where('is_completed', true);
+
+        $enrolledCampIds = $uncompleted_camps->pluck('camp_id')->toArray();
+        $enrolledCampIdsCom = $completed_camps->pluck('camp_id')->toArray();
 
         $camps = Camp::whereIn('id', $enrolledCampIds)->get();
+        $camps_complete = Camp::whereIn('id', $enrolledCampIdsCom)->get();
 
         return response()->json([
             'user' => $userData,
-            'enrolled_camps' => EnrolledResource::collection($camps)
+            'enrolled_camps' => EnrolledResource::collection($camps),
+            'completed_camps' => EnrolledResource::collection($camps_complete)
         ]);
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('camp_id');
+            $table->boolean('is_completed')->nullable()->default(false);
             $table->timestamps();
 
             $table->foreign('camp_id')->references('id')->on('camps');
