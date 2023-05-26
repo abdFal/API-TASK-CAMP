@@ -15,6 +15,7 @@ class EnrollController extends Controller
     {
         $this->middleware('auth:sanctum');
         $this->middleware('enroll')->only('enroll');
+        $this->middleware('CompleteEnroll')->only('complete');
     }
     public function enroll(Request $request, $id)
     {
@@ -37,10 +38,9 @@ class EnrollController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $data = Enroll::where('user_id', $user_id);
-        $datas = $data->where('camp_id', $camp_id);
+        $data = Enroll::where('user_id', $user_id)->where('camp_id', $camp_id);
 
-        $datas->update([
+        $data->update([
             'is_completed' => true,
         ]);
 
