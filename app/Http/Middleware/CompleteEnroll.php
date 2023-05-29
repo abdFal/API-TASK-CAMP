@@ -18,8 +18,10 @@ class CompleteEnroll
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        $camp_id = $request->route('camp_id');
-        $data = Enroll::where('user_id', $user->id)->where('camp_id', $camp_id);
+        $request->validate([
+            'camp_id' => 'required|exists:camps,id'
+        ]);
+        $data = Enroll::where('user_id', $user->id)->where('camp_id', $request->camp_id);
         if(!$data){
             return response()->json([
                 'message' => 'anda belum mengenroll camp ini'

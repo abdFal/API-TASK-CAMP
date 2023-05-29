@@ -46,32 +46,31 @@ class AuthController extends Controller
         );
     }
 
-  public function me(Request $request)
+    public function me(Request $request)
     {
         $user = Auth::user();
-
+        
         $userData = [
             'name' => $user->name,
             'email' => $user->email,
             'occupation' => $user->occupation
         ];
-
+        
         $enrolledCamps = Enroll::where('user_id', $user->id)->get();
-        $uncompleted_camps = $enrolledCamps->where('is_completed', false);
-        $completed_camps = $enrolledCamps->where('is_completed', true);
-
-        $enrolledCampIds = $uncompleted_camps->pluck('camp_id')->toArray();
-        $enrolledCampIdsCom = $completed_camps->pluck('camp_id')->toArray();
-
-        $camps = Camp::whereIn('id', $enrolledCampIds)->get();
-        $camps_complete = Camp::whereIn('id', $enrolledCampIdsCom)->get();
-
+        
+        $camps = $enrolledCamps->where('is_completed', false)->pluck('camp_id');
+        $campsComplete = $enrolledCamps->where('is_completed', true)->pluck('camp_id');
+        
+        $enrolledCampsData = Camp::whereIn('id', $camps)->get();
+        $completedCampsData = Camp::whereIn('id', $campsComplete)->get();
+        
         return response()->json([
-            'user' => $userData,
-            'enrolled_camps' => EnrolledResource::collection($camps),
-            'completed_camps' => EnrolledResource::collection($camps_complete)
+            'user_details' => $userData,
+            'enrolled_camps' => EnrolledResource::collection($enrolledCampsData),
+            'completed_camps' => EnrolledResource::collection($completedCampsData)
         ]);
     }
+
 
 
 }
